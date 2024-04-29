@@ -85,6 +85,14 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocBuilder<SkycastBloc, SkycastState>(
                 builder: (context, state) {
                   if (state is SkycastSuccess) {
+                    // Calculate time of day
+                    final now = DateTime.now();
+                    String timeOfDay = 'Morning';
+                    if (now.hour >= 12 && now.hour < 18) {
+                      timeOfDay = 'Afternoon';
+                    } else if (now.hour >= 18 && now.hour < 24) {
+                      timeOfDay = 'Evening';
+                    }
                     return SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
@@ -101,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 8,
                           ),
                           Text(
-                            'Good Morning',
+                            'Good $timeOfDay',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
